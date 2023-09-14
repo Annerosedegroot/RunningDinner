@@ -22,3 +22,19 @@ df.to_excel('Output.xlsx')
 for i in range(len(df['Huisadres'])):
     if df['Huisadres'][i] in df['Bewoner'][i]:
         	print(df['Bewoner'][i])
+         
+         
+         
+         
+         
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   print('hoi Sam')      
