@@ -7,16 +7,22 @@ ExcelInput = 'Running Dinner dataset 2022.xlsx'
 
 
 #Hier gaan we de excel tabbladen naar verschillende DataFrames inlezen.
-dfA = pd.read_excel(ExcelInput, sheet_name='Bewoners')
-dfB = pd.read_excel(ExcelInput, sheet_name='Adressen')
-dfC = pd.read_excel(ExcelInput, sheet_name='Paar blijft bij elkaar')
-dfD = pd.read_excel(ExcelInput, skiprows=[0], sheet_name='Buren')
-dfE = pd.read_excel(ExcelInput, skiprows=[0], sheet_name='Kookte vorig jaar')
-dfF = pd.read_excel(ExcelInput, skiprows=[0], sheet_name='Tafelgenoot vorig jaar')
+dfBewoners = pd.read_excel(ExcelInput, sheet_name='Bewoners')
+dfAdressen = pd.read_excel(ExcelInput, sheet_name='Adressen')
+dfPaarBlijftBijElkaar = pd.read_excel(ExcelInput, sheet_name='Paar blijft bij elkaar')
+dfBuren = pd.read_excel(ExcelInput, skiprows=[0], sheet_name='Buren')
+dfKookteVorigJaar = pd.read_excel(ExcelInput, skiprows=[0], sheet_name='Kookte vorig jaar')
+dfTafelGenootVorigJaar = pd.read_excel(ExcelInput, skiprows=[0], sheet_name='Tafelgenoot vorig jaar')
+
+#Hier gaan we de apparte dataFrames bewerken zodat ze makkelijker te behandelen zijn.
+#We gaan string slicen op adressen zodat we ze later kunnen toevoegen aan de juiste bewoners
+for i in range(len(dfKookteVorigJaar['Huisadres'])):
+    dfKookteVorigJaar.loc[i, 'Huisadres'] = dfKookteVorigJaar['Huisadres'][i][0:2] + '_' + dfKookteVorigJaar['Huisadres'][i][2:]
+
 
 #Hier gaan we de verschillende dataframes samenvoegen tot 1 enkele dataframe
+df = dfBewoners.merge(dfAdressen, how = 'left', on ='Huisadres')
 
-df = dfA.merge(dfB, how = 'left', on ='Huisadres')
 
 
 
@@ -34,16 +40,13 @@ for i in range(len(df['Huisadres'])):
         Bijelkaarbinairlijst.append(0)
 
 #De colom maken om te kunnen visualiseren welke personen er bij iemand moeten blijven
-
 df['Koppel blijft bijelkaar'] = Bijelkaarbinairlijst
 
 #Verzamelingen definieren
 Huisadres = df['Huisadres']
 Deelnemers = df['Bewoner']
-print(df)
-
 
 
 
 df.to_excel('Output.xlsx')  
-         
+print(df)
