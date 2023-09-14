@@ -31,16 +31,3 @@ print(Bewoners)
          
          
          
-         
-         
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   print('hoi Sam')      
