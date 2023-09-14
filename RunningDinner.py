@@ -11,5 +11,14 @@ dfE = pd.read_excel('Running Dinner dataset 2022.xlsx', skiprows=[0], sheet_name
 dfF = pd.read_excel('Running Dinner dataset 2022.xlsx', skiprows=[0], sheet_name='Tafelgenoot vorig jaar')
 
 df = dfA.merge(dfB, how = 'left', on ='Huisadres')
-print(df)
+
+
+#Zorgen dat het huisadres hetzelfde is alsin personen. Dit om later makkelijker te kunnen slicen. 
+for i in range(len(df['Huisadres'])):
+    df.loc[i, 'Huisadres'] = df['Huisadres'][i][0:2] + '_' + df['Huisadres'][i][2:]
+
 df.to_excel('Output.xlsx')
+
+for i in range(len(df['Huisadres'])):
+    if df['Huisadres'][i] in df['Bewoner'][i]:
+        	print(df['Bewoner'][i])
