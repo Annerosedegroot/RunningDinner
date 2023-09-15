@@ -46,6 +46,9 @@ df['Koppel blijft bijelkaar'] = Bijelkaarbinairlijst
 Huisadres = df['Huisadres']
 Deelnemers = df['Bewoner']
 
+#Proberen om de gangen in de grote dataframe te krijgen
+df = df.merge(dfKookteVorigJaar, how = 'left', on ='Huisadres')
+df.columns = ['Bewoner','Huisadres','Kookt niet','Min groepsgrootte', 'Max groepsgrootte','Voorkeur gang', 'Koppel blijft bijelkaar', 'Vorig jaar gang']
 
 
 df.to_excel('Output.xlsx')  
